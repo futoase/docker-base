@@ -1,21 +1,20 @@
-# base - Base Image with supervisord
-
 FROM ubuntu
-MAINTAINER David Zumbrunnen <zumbrunnen@gmail.com>
+
+MAINTAINER Keiji Matsuzaki <futoase@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.utf8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANGUAGE en_US.utf8
+ENV LC_ALL en_US.utf8
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+
 RUN apt-get -qq update
 RUN apt-get -yqq upgrade
-RUN apt-get -yqq install supervisor
+RUN apt-get -yqq install language-pack-en-base language-pack-ja
+RUN update-locale en_US.UTF-8
+RUN apt-get -yqq install git build-essential
 
 ADD locale /etc/default/locale
-ADD supervisord.conf /etc/supervisor/supervisord.conf
 
-RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
-
-CMD ["/usr/bin/supervisord"]
+RUN locale-gen en_US.utf8 && dpkg-reconfigure locales
